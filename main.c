@@ -8,14 +8,16 @@ int main ()
 {
 	int		file_descrip;
 	char	*path_file;
-	char	buffer[50];
+	char	*buffer;
 
 	path_file = "archivoWololo.txt";
 
 	file_descrip = open (path_file, O_RDONLY);
 	printf("fd-> %i\n",file_descrip);
-	read (file_descrip, buffer, 10);
+	buffer = (char *)malloc(BUFFER_SIZE);
+	read (file_descrip, buffer, BUFFER_SIZE);
 	printf("%s\n",buffer);
+	free (buffer);
 
 	return (0);
 }
