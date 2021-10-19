@@ -6,41 +6,39 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:24:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/04 20:25:29 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/19 14:00:46 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
-void    *ft_calloc(size_t count, size_t size);
-
-char	*get_next_line(ind fd)
+char	*get_next_line(int fd)
 {
-	int		BUFFER_SIZE
+	int		BUFFER_SIZE;
 	char	*buffer;
-	t_list	*line;
+	static char *rest;
+//	static t_list	line;		idea posible hacerlo con listas
 
-	BUFFER_SIZE = 10;
-	buffer = (char *)ft_calloc(BUFFER_SIZE)
+	line = NULL;
+	BUFFER_SIZE = 15;
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));	//creo que hay que añadir el +1 para que el buffer tenga un nulo al final
+	read(fd, buffer, BUFFER_SIZE);
+	if (ft_strchr(buffer, 10))
 
-	line->content = read(fd, buffer, BUFFER_SIZE);
 
-	return (line->content); //no es buffer lo que tiene que devovler
+	return (buffer);	//no tiene q devolver buffer, lo he puesto para hacer pruebas
 }
 
-void    *ft_calloc(size_t count, size_t size)
+int main()
 {
-        void    *ptr;
-		size_t	i;
+	int fd;
 
-        ptr = (void *)malloc(size * count);
-        if (ptr == NULL)
-                return (0);
-		i = 0;
-		while (i < size)
-		{
-			ptr[i] = '\0';
-			i++
-		}
-        return (ptr);
+	fd = open("archivoWololo.txt", O_RDONLY);
+	printf ("fd->%i\n",fd);
+	get_next_line(fd);
+	return 0;
 }
