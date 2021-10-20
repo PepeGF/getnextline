@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:21:43 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/20 12:25:25 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:09:50 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 
 void    *ft_calloc(size_t count, size_t size);
 char    *ft_strchr(const char *s, int c);
-void    ft_putstr(char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t  ft_strlen(const char *s);
 
 #endif

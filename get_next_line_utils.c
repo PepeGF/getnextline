@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/20 12:25:08 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:10:07 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
+size_t  ft_strlen(const char *s)
+{
+        int     i;
+
+        i = 0;
+        while (s[i])
+                i++;
+        return (i);
+}
