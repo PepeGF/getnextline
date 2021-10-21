@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:24:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/20 18:49:02 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/21 11:22:24 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ char	*get_next_line(int fd)
 	char		*aux;
 	static char	*rest;
 	char		*first_n;
+	char		*line;
 //	static t_list	line;		idea posible hacerlo con listas
 
-	BUFFER_SIZE = 1500;		//solo vale para prubas
+	BUFFER_SIZE = 5;		//solo vale para prubas
+
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	read(fd, buffer, BUFFER_SIZE);
 	first_n = ft_strchr(buffer, 10);
@@ -30,19 +32,40 @@ char	*get_next_line(int fd)
 		aux = ft_substr(buffer, 0, first_n - buffer + 1);
 		rest = ft_substr(buffer, first_n - buffer + 1, BUFFER_SIZE);
 		free (rest);
-		free (buffer);
+		line = aux;
 		free (aux);
-		return (aux);
+		free (buffer);
+		return (line);
 	}
-	return (buffer);	//no tiene q devolver buffer, lo he puesto para hacer pruebas
+	else
+	{
+		aux = ft_strdup(buffer);
+		free(buffer);
+		//volver a llamar a gnl. Primero verificar si existe "rest"
+
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		read(fd, buffer, BUFFER_SIZE);
+		rest = ft_strjoin(aux, buffer);
+		free (aux);
+		free(buffer);
+		return (rest);
+
+	}
+	return (rest);	//no tiene q devolver buffer, lo he puesto para hacer pruebas
+}
+void leakss()
+{
+	system ("leaks a.out");
 }
 
 int	main()
 {
 	int fd;
 
+
 	fd = open("el_quijote.txt", O_RDONLY);
-	printf("%s\n",get_next_line(fd));
+	printf("%s",get_next_line(fd));
+	atexit(leakss);
 	return 0;
 }
 
