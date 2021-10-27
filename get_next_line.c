@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:24:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/21 11:22:24 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/27 10:09:35 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 char	*get_next_line(int fd)
 {
-	int		BUFFER_SIZE;	//solo vale para pruebas
 	char		*buffer;
 	char		*aux;
 	static char	*rest;
 	char		*first_n;
 	char		*line;
 //	static t_list	line;		idea posible hacerlo con listas
-
-	BUFFER_SIZE = 5;		//solo vale para prubas
 
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	read(fd, buffer, BUFFER_SIZE);

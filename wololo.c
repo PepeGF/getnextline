@@ -1,42 +1,96 @@
-char	*get_next_line(int fd)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wololo.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/27 14:43:28 by josgarci          #+#    #+#             */
+/*   Updated: 2021/10/27 14:58:25 by josgarci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+
+static char	*ft_strcpy(char *dst, char *src)
 {
-	int		BUFFER_SIZE;	//solo vale para pruebas
-	char		*buffer;
-	char		*aux;
-	static char	*rest;
-	char		*first_n;
-	char		*line;
-//	static t_list	line;		idea posible hacerlo con listas
+	size_t	i;
+	size_t	len_src;
 
-	BUFFER_SIZE = 5;		//solo vale para prubas
-
-	//if (!rest)	si no hay static ¿Lo mismo que no hay nada???
+	i = 0;
+	len_src = ft_strlen(src);
+	while (i < len_src)
 	{
-		//{		posiblemente esto tenga que ser una función propia
-		//generar buffer con malloc u bzero
-		//leer archivo y rellenar el buffer
-		//} hasta aquí la posible función
+		dst[i] = src[i];
+		i++;
 	}
-	//else			si hay rest
-	//{
-		//	almacenar en el buffer lo contenido en static
-		//	hay que hacer malloc+bzero antes de hacer esto?
-		//	si hay que hacer malloc+bzero, hay que ver la longitud del rest?? 
-	//}
-	//if (ft_strchr(buffer, 10))	si hay salto en el buffer
-	//{
-		//	separar hasta \n
-		//	almacenar restante en static
-		//	liberar cosas
-		//	return 1ª parte
-	//}
-	//else		no hay \n 
-	//{
-	//					esta parte no la tengo nada clara
-		//		¿¿¿join de static + buffer???
-		//		o bien static = buffer
-		//	nuevo buffer linea 15
-		//	
-	//}
+	return (dst);
 }
 
+//puede que haya q añadir BFFSIZE
+
+static char	*ft_fill_buffer(char *buffer, int fd)
+{
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	ft_bzero(buffer, BUFFER_SIZE + 1);
+	//puede que sea necesario hacer free (buffer) aquí, si todo funciona, no
+	read (fd, buffer, BUFFER_SIZE);
+	buffer = ft_strjoin(rest, buffer);
+	return (buffer);
+}
+
+static char	*ft_read_again(char *rest, char *buffer, int fd)
+{
+	rest = ft_strchr(rest, buffer);
+	buffer = ft_fill_buffer(buffer, fd);
+}
+
+static char	*ft_split_line(char *rest, char *buffer, char *aux, char *line)
+{
+	size_t	len_aux;
+
+	len_aux = ft_strlen(aux);
+	aux = ft_substr(buffer, 0, first_n - buffer + 1);
+	rest = ft_substr(buffer, first_n - buffer + 1, BUFFER_SIZE);
+	free (rest);
+	line = malloc(sizeof(char) * (len_aux + 1));
+	ft_bzero(line, len_aux + 1);
+	line = ft_strcpy(line, aux);
+	free (aux);
+	free (buffer);
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*rest;
+	char		*buffer;
+	char		*aux;
+	char		*line;
+	int			first_n;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	buffer = ft_fill_buffer(buffer, fd);
+	first_n = ft_strchr(buffer, 10);
+	while (!first_n)
+	{
+		ft_read_again();
+		first_n = ft_strchr(buffer, 10);
+	}
+	if (first_n)//	si hay salto en el buffer
+	{
+		line = ft_split_line();
+	}
+	return (buffer);
+}
+
+int	main(void)
+{
+	int	fd;
+
+	fd = open("el_quijote.txt", O_RDONLY);
+	printf("%s", get_next_line(fd));
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:21:43 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/21 11:09:25 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/27 14:58:44 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ typedef struct s_list
 	struct s_list 	*next;
 } t_list;
 
-void    *ft_calloc(size_t count, size_t size);
-char    *ft_strchr(const char *s, int c);
+void	ft_bzero(void *str, size_t n);
+char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t  ft_strlen(const char *s);
+size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *s1);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 #endif

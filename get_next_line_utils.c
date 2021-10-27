@@ -6,27 +6,22 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/21 11:22:33 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/27 13:22:54 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	ft_bzero(void *str, size_t n)
 {
-	void	*ptr;
 	size_t	i;
 
-	ptr = (void *)malloc(size * count);
-	if (ptr == NULL)
-		return (0);
 	i = 0;
-	while (i < size * count)
+	while (i < n)
 	{
-		((char *)ptr)[i] = '\0';
+		((unsigned char *)str)[i] = '\0';
 		i++;
 	}
-	return (ptr);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -66,14 +61,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-size_t  ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-        int     i;
+	int	i;
 
-        i = 0;
-        while (s[i])
-                i++;
-        return (i);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -91,9 +86,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return ((char *)s2);
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
-	str = (char *)ft_calloc(sizeof(char) * (s1len + s2len + 1), sizeof(char));
+	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!str)
 		return (0);
+	ft_bzero(str, s1len + s2len + 1);
 	i = -1;
 	while (++i < s1len)
 		str[i] = s1[i];
@@ -101,35 +97,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (++i < s2len)
 		str[i + s1len] = s2[i];
 	return (str);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*ptr;
-	size_t	lens1;
-
-	lens1 = ft_strlen(s1);
-	ptr = (char *)malloc(sizeof(char) * (lens1 + 1));
-	if (ptr == NULL)
-		return (0);
-	ft_strlcpy(ptr, s1, lens1 + 1);
-	return (ptr);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	srclen;
-
-	i = 0;
-	srclen = ft_strlen(src);
-	if (dstsize == 0)
-		return (srclen);
-	while (src[i] && i < (dstsize - 1) && dstsize != 0)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (srclen);
 }
