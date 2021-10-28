@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:24:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/27 19:38:21 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/28 10:59:39 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,21 @@ char	*get_next_line(int fd)
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	if (read (fd, buffer, BUFFER_SIZE))
 	{
-		buffer = ft_strjoin(rest, buffer);
-		first_n = ft_strchr(buffer, 10);
+		aux = ft_strjoin(rest, buffer);
+		if (rest)
+			free(rest);
+		rest = aux;
+		free(aux);
+		first_n = ft_strchr(aux, 10);
 		while (!first_n)
 		{
 			rest = ft_strjoin("",buffer);
+			free(buffer);
 			buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 			ft_bzero(buffer, BUFFER_SIZE + 1);
 			read (fd, buffer, BUFFER_SIZE);
-			buffer = ft_strjoin(rest, buffer);
-			first_n = ft_strchr(buffer, 10);
+			aux = ft_strjoin(rest, buffer);
+			first_n = ft_strchr(aux, 10);
 		}
 		aux = ft_substr(buffer, 0, first_n - buffer + 1);
 		rest = ft_substr(buffer, first_n - buffer + 1, BUFFER_SIZE);
@@ -67,21 +72,22 @@ char	*get_next_line(int fd)
 		return (0);
 }
 
-/*void leakss()
+void leakss()
 {
 	system ("leaks a.out");
 }
-*/
+
 int	main()
 {
 	int fd;
 
+	atexit(leakss);
 
-	fd = open("el_quijote.txt", O_RDONLY);
-	while (get_next_line(fd));
-//		printf("%s",get_next_line(fd));
+	fd = open("lotr.txt", O_RDONLY);
+//	while (get_next_line(fd))
+		printf("%s",get_next_line(fd));
+		printf("%s",get_next_line(fd));
 
-//	atexit(leakss);
 	return 0;
 }
 
