@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 10:56:53 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/28 13:26:53 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:00:45 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,30 @@ char	*get_next_line(int fd)
 		return (0);
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	read(fd, buffer, BUFFER_SIZE);
-	rest = buffer;
+	rest = buffer; //hacer substr
+	//free rest
 	first_n = ft_strchr(rest, 10);
-	if (first_n)
+	printf("El satto está aquí--->>>%i\n",first_n);
+	while (!first_n)
 	{
+	ft_bzero(buffer, BUFFER_SIZE + 1);
+	read(fd, buffer, BUFFER_SIZE);
+	ft_strjoin(rest, buffer);
+	printf("Soy rest al principio --->>>%s\n",rest);
+	
+	free(buffer);
+	first_n = ft_strchr(rest, 10);
+	}
 		aux = ft_substr(rest, 0, first_n + 1);
 		line = aux;
+	printf("Soy line al principio --->>>%s\n",line);
 		free (aux);
-		aux = ft_substr(rest, first_n + 1, BUFFER_SIZE - first_n);
+		aux = ft_substr(rest, first_n + 1, BUFFER_SIZE - first_n);//rest = substr??
 		rest = aux;
 		free (buffer);
 		return (line);
-	}
-	free(buffer);
+	printf("Soy line al final --->>>%s\n",line);
+	//free(buffer);
 	return (rest);
 }
 
@@ -56,8 +67,9 @@ int	main()
 
 	fd = open("el_quijote.txt", O_RDONLY);
 //	while (get_next_line(fd))
-//		printf("%s",get_next_line(fd));
-get_next_line(fd);
+		printf("%s",get_next_line(fd));
+		printf("%s",get_next_line(fd));
+		printf("%s",get_next_line(fd));
 
 	return 0;
 }
