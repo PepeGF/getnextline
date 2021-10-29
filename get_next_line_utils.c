@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/28 12:28:45 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/29 12:01:57 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_strchr(const char *s, int c)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0' && s[i] != (unsigned char)c)
 		i++;
@@ -66,6 +68,8 @@ size_t	ft_strlen(const char *s)
 {
 	int	i;
 
+	if(!s)			//añadido
+		return (0);	//añadido
 	i = 0;
 	while (s[i])
 		i++;
@@ -79,13 +83,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s1len;
 	size_t	s2len;
 
-	if (!s2 && !s1)
+/*	if (!s2 && !s1)
 		return (0);
 	if (!s2)
 		return ((char *)s1);
 	if (!s1)
 		return ((char *)s2);
-	s1len = ft_strlen(s1);
+*/	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!str)
