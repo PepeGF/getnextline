@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 10:56:53 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/29 14:05:11 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:16:39 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_next_line(int fd)
 static char	*ft_read_text(char *rest, int fd)
 {
 	char	*buffer;
-	//char	*aux;
+	char	*aux;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
@@ -46,12 +46,15 @@ static char	*ft_read_text(char *rest, int fd)
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	if(read(fd, buffer, BUFFER_SIZE))
 	{
-		/*aux quiza*/ rest = ft_strjoin(rest, buffer);
-		//printf("Soy aux-> %s\n",aux);
+		aux /*quiza rest*/ = ft_strjoin(rest, buffer);
+		printf("-----------------------------------\n");
+		printf("Soy aux(deberia contener todo)-> %s+-+-+\n",aux);
+		printf("-----------------------------------\n");
 		free(buffer);
-		//rest = ft_substr(aux, 0, ft_strlen(aux));
-		//free(aux);
-		//free(rest);
+		rest = ft_substr(aux, 0, ft_strlen(aux));
+		printf("Soy rest (igual q aux)-> %s\n",rest);
+		free(aux);
+		//free(rest); //no aporta nada ni quita en leaks
 		return(rest);
 	}
 	free(buffer);
@@ -71,6 +74,7 @@ static char	*ft_plit_line(char *rest, int first_n)
 	rest = ft_substr(aux, 0, len_rest - first_n);
 	//free(rest);
 	free(line);
+	printf("AQUI TERMINA LA EJECUCION DE LA FUNCION CADA VEZ\n");
 	return (line);
 }
 
@@ -169,10 +173,11 @@ int	main()
 
 	fd = open("el_quijote.txt", O_RDONLY);
 //	while (get_next_line(fd))
-		printf("%s",get_next_line(fd));
-		printf("%s",get_next_line(fd));
-		printf("%s",get_next_line(fd));
-		printf("%s",get_next_line(fd));
+	get_next_line(fd);
+	get_next_line(fd);
+	get_next_line(fd);
+	get_next_line(fd);
+		//printf("LINEA--->>>%s",get_next_line(fd));
 //		printf("%s",get_next_line(fd));
 //		printf("%s",get_next_line(fd));
 
