@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/29 12:01:57 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/31 09:56:43 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,3 +103,23 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str[i + s1len] = s2[i];
 	return (str);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	size_t	lens1;
+	int		i;
+
+	lens1 = ft_strlen(s1);
+	ptr = (char *)malloc(sizeof(char) * (lens1 + 1));
+	if (ptr == NULL)
+		return (0);
+	i = 0;
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	return (ptr);
+}
+

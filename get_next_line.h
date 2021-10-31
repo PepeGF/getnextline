@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:21:43 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/28 12:33:25 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/10/31 09:58:30 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s1);
 
 #endif
