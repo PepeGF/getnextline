@@ -6,11 +6,14 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/01 10:06:30 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/01 10:49:16 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_split_line(char **rest,int first_n);
+
 /*
 char	*ft_readtext(int fd, int *first_n, char **rest)
 {
@@ -35,7 +38,6 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 	}
 }
 */
-char	*ft_split_line(char **rest,int first_n);
 
 char	*get_next_line(int fd)
 {
@@ -115,7 +117,7 @@ int	main()
 
 //	atexit(leakss);
 
-	fd = open("el_quijote.txt", O_RDONLY);
+	fd = open("Don Quixote of La Mancha.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
