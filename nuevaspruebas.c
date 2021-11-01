@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/31 12:00:50 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/01 08:59:43 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,16 @@ int	main()
 
 	fd = open("el_quijote.txt", O_RDONLY);
 	i = 1;
-	i *= 1;
-	while (get_next_line(fd))
-		printf(get_next_line(fd));
-	/*
-	while (i <= LINEAS)
+	if (LINEAS == 0)
+		while (get_next_line(fd));
+	else
 	{
-	printf("Linea %i->%s",i,get_next_line(fd));
-	printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-	*/
+		while (i <= LINEAS)
+		{
+		printf("Linea %i->%s",i,get_next_line(fd));
+		i++;
+		}
+	}
 	/*
 	printf("Primera llamada\n---------------\n");
 		printf("Linea 1->%s", get_next_line(fd));
