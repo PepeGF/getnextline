@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/02 11:37:03 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/02 13:43:55 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,10 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE < 0 || fd <= 2)
 		return (0);
 	first_n = ft_strchr(rest, 10);
-	ft_readtext(fd, &first_n, &rest);
-	return(ft_split_line(&rest, first_n));
-}
-
-char	*ft_split_line(char **rest,int first_n)
-{
-	char	*line;
-	char	*aux;
-	line = ft_substr(*rest, 0, first_n + 1);
-	aux = ft_substr(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
-	//free(*rest); //si se libera pierde informacion
-	*rest = ft_strdup(aux);
-	free(aux);
-	return(line);
+	if (!ft_readtext(fd, &first_n, &rest))
+		return (0);
+	else
+		return(ft_split_line(&rest, first_n));
 }
 
 char	*ft_readtext(int fd, int *first_n, char **rest)
@@ -49,17 +39,40 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
 			return (0);
-		ft_bzero (buffer, BUFFER_SIZE + 1);
+		//ft_bzero (buffer, BUFFER_SIZE + 1);
 		if (!read (fd, buffer, BUFFER_SIZE))
+		{
+			free (buffer);
 			return (0);
+		}
 	aux = ft_strjoin(*rest, buffer);
-	buffer = 0;
 	free(buffer);
+	if (*rest && ft_strlen(*rest) > 0)
+		free(*rest);
 	*rest = ft_strdup(aux);
 	free(aux);
 	*first_n = ft_strchr(*rest, 10);
 	}
 	return(*rest);
+}
+
+char	*ft_split_line(char **rest,int first_n)
+{
+	char	*line;
+	char	*aux;
+	line = ft_substr(*rest, 0, first_n + 1);
+	aux = ft_substr(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
+	/*
+	//free(*rest); //si se libera pierde informacion
+	*rest = ft_strdup(aux);
+	free(aux);
+	*/
+	
+	free (*rest);
+	*rest = aux;
+	
+	//free (line);
+	return(line);
 }
 /*
 void leakss()
@@ -74,7 +87,7 @@ int	main()
 
 //	atexit(leakss);
 
-	fd = open("xlotr.txt", O_RDONLY);
+	fd = open("textito.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
