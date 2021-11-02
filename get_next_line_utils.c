@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/01 11:52:44 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/02 09:16:00 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_strchr(const char *s, int c)
 	int	i;
 
 	if (!s)
-		return (0);
+		return (-1);
 	i = 0;
 	while (s[i] != '\0' && s[i] != (unsigned char)c)
 		i++;

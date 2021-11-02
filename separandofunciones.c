@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/01 10:49:16 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/02 10:56:38 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 	char	*buffer;
 	char	*aux;
 
-	while (!*first_n)
+	while (first_n == -1)
 	{
 		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buffer)
+			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
 		if (!read (fd, buffer, BUFFER_SIZE))
 			return (0);
@@ -31,10 +33,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 	free(buffer);
 	*rest = ft_strdup(aux);
 	free(aux);
-	if (*rest[0] != '\n')
-		*first_n = ft_strchr(rest, 10);
-	else
-		break;
+	*first_n = ft_strchr(rest, 10);
 	}
 }
 */
@@ -51,13 +50,11 @@ char	*get_next_line(int fd)
 		return (0);
 	first_n = ft_strchr(rest, 10);
 	//ft_readtext(fd, &first_n, &*rest);
-	while (!first_n)
+	while (first_n == -1)
 	{
 		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
-		{
 			return (0);
-		}
 		ft_bzero (buffer, BUFFER_SIZE + 1);
 		if (!read (fd, buffer, BUFFER_SIZE))
 			return (0);
@@ -66,10 +63,13 @@ char	*get_next_line(int fd)
 	free(buffer);
 	rest = ft_strdup(aux);
 	free(aux);
+	first_n = ft_strchr(rest, 10);
+	/*
 	if (rest[0] != '\n')
 	first_n = ft_strchr(rest, 10);
 	else
 		break;
+		*/
 	}
 /*
 	line = ft_substr(rest, 0, first_n + 1);
@@ -86,9 +86,11 @@ char	*ft_split_line(char **rest,int first_n)
 {
 	char	*line;
 	char	*aux;
-
+	printf("rest:%s//SALTO->%i\n",*rest, first_n);
 	line = ft_substr(*rest, 0, first_n + 1);
+	printf("line:\n%s\n",line);
 	aux = ft_substr(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
+	printf("aux:\n%s\n",aux);
 	//free(*rest);
 	*rest = ft_strdup(aux);
 	free(aux);
@@ -117,7 +119,7 @@ int	main()
 
 //	atexit(leakss);
 
-	fd = open("Don Quixote of La Mancha.txt", O_RDONLY);
+	fd = open("xlotr.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
@@ -125,6 +127,7 @@ int	main()
 		while (i <= LINEAS)
 		{
 			printf("Linea %i->%s",i,get_next_line(fd));
+			printf("******************************************************\n");
 			i++;
 		}
 			//printf(get_next_line(fd));
