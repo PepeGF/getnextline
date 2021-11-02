@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/31 09:56:43 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/01 11:52:44 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	ft_strchr(const char *s, int c)
 		i++;
 	if (s[i] == (unsigned char)c)
 		return (i);
-	return (0);
+	return (-1);
+	//return (0);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)

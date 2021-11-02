@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/01 08:59:43 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/01 11:59:20 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE < 0 || fd <= 2)
 		return (0);
 	first_n = ft_strchr(rest, 10);
-	while (!first_n)
+	while (first_n == -1)
 	{
 		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 		ft_bzero (buffer, BUFFER_SIZE + 1);
@@ -34,14 +34,14 @@ char	*get_next_line(int fd)
 	free(buffer);
 	rest = ft_strdup(aux);
 	free(aux);
-	if (rest[0] != '\n')
-	first_n = ft_strchr(rest, 10);
-	else
-		break;
+	//if (rest[0] != '\n')
+	//first_n = ft_strchr(rest, 10);
+	//else
+	//	break;
 	}
 	line = ft_substr(rest, 0, first_n + 1);
-	aux = ft_substr(rest, first_n + 1, ft_strlen(rest) - first_n - 1);
-	free(rest);
+	aux = ft_substr(rest, first_n + 1, ft_strlen(rest) - first_n );
+	//free(rest);
 	rest = ft_strdup(aux);
 	free(aux);
 	return(line);
@@ -69,7 +69,7 @@ int	main()
 
 //	atexit(leakss);
 
-	fd = open("el_quijote.txt", O_RDONLY);
+	fd = open("Don Quixote of La Mancha.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
