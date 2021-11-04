@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/02 11:42:17 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/04 13:40:48 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 */
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
+	printf("s1len:%zu\n",s1len);
 	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!str)
 		return (0);

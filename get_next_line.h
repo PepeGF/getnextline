@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:21:43 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/31 09:58:30 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/04 10:28:13 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_list
 	struct s_list 	*next;
 } t_list;
 
+char	*get_next_line(int fd);
 void	ft_bzero(void *str, size_t n);
 int		ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

@@ -1,185 +1,129 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   separandofunciones.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:56:53 by josgarci          #+#    #+#             */
-/*   Updated: 2021/10/29 14:16:39 by josgarci         ###   ########.fr       */
+/*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
+/*   Updated: 2021/11/04 13:40:23 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_read_text(char *rest, int fd);
-static char	*ft_plit_line(char *rest, int first_n);
+char	*ft_split_line(char **rest,int first_n);
+char	*ft_readtext(int fd, int *first_n, char **rest);
 
 char	*get_next_line(int fd)
 {
-	int			first_n;
 	static char	*rest;
+	int			first_n;
 
-	printf("Soy rest al inicio de cada ejecución: %s\n",rest);
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd,0,0) == -1)
+		return (0);
 	first_n = ft_strchr(rest, 10);
-	printf("Posicion del salto: ->%i\n",first_n);
-	while(!first_n)
+	if (!ft_readtext(fd, &first_n, &rest))
+		return (0);
+	else
 	{
-		rest /*quiza aux*/ = ft_read_text(rest, fd);
-	printf("Soy rest despues de cada lectura: %s\n",rest);
-		if(!rest)
-			return (0);
-		first_n = ft_strchr(rest, 10);
+		return(ft_split_line(&rest, first_n));
 	}
-
-	return (ft_plit_line(rest, first_n));
 }
 
-static char	*ft_read_text(char *rest, int fd)
+char	*ft_readtext(int fd, int *first_n, char **rest)
 {
 	char	*buffer;
 	char	*aux;
 
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (0);
-	ft_bzero(buffer, BUFFER_SIZE + 1);
-	if(read(fd, buffer, BUFFER_SIZE))
+	while (*first_n == -1)
 	{
-		aux /*quiza rest*/ = ft_strjoin(rest, buffer);
-		printf("-----------------------------------\n");
-		printf("Soy aux(deberia contener todo)-> %s+-+-+\n",aux);
-		printf("-----------------------------------\n");
-		free(buffer);
-		rest = ft_substr(aux, 0, ft_strlen(aux));
-		printf("Soy rest (igual q aux)-> %s\n",rest);
-		free(aux);
-		//free(rest); //no aporta nada ni quita en leaks
-		return(rest);
-	}
+		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buffer)
+			return (0);
+		ft_bzero (buffer, BUFFER_SIZE + 1);
+		if (!read (fd, buffer, BUFFER_SIZE))
+		{
+			free (buffer);
+			return (0);
+		}
+	//printf("Buffer:\n%s\n",buffer);
+	aux = ft_strjoin(*rest, buffer);
+	//printf("rest:%s\naux:%s\n",*rest, aux);
+	//printf("aux:\n%s\n",aux);
 	free(buffer);
-	return (0);
+	if (*rest && ft_strlen(*rest) > 0)
+		free(*rest);
+	*rest = ft_strdup(aux);
+	free(aux);
+	*first_n = ft_strchr(*rest, 10);
+	}
+	//printf("Dir **rest->%p\n",*rest);
+	//printf("Dir buffer->%p\n",buffer);
+	//printf("Dir aux->%p\n",aux);
+	return(*rest);
 }
 
-static char	*ft_plit_line(char *rest, int first_n)
+char	*ft_split_line(char **rest,int first_n)
 {
-	size_t	len_rest;
 	char	*line;
 	char	*aux;
 
-	len_rest = ft_strlen(rest);
-	line = ft_substr(rest, 0, first_n + 1);;
-	aux = ft_substr(rest, first_n + 1, len_rest);
-	free(rest);
-	rest = ft_substr(aux, 0, len_rest - first_n);
-	//free(rest);
-	free(line);
-	printf("AQUI TERMINA LA EJECUCION DE LA FUNCION CADA VEZ\n");
-	return (line);
-}
-
-/*
-static char	*ft_first_read(char *rest, int fd);
-static char	*ft_more_reading(char *rest, int fd);
-
-char	*get_next_line(int fd)
-{
-	static char	*rest;
-//	char		*aux;
-//	char		*line;
-	int			first_n;
-
-	//primera lectura necesaria, strjoin no hace mmalloc si una de las dos strings no exite
-	if (!rest)
-		rest = ft_first_read(rest, fd);
-	first_n = ft_strchr(rest, 10);
-	while (!first_n)
-	{
-		rest = ft_more_reading(rest, fd);
-		first_n = ft_strchr(rest, 10);
-		free (rest);
-	}
+	line = ft_substr(*rest, 0, first_n + 1);
+	aux = ft_substr(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
+	/*
+	//free(*rest); //si se libera pierde informacion
+	*rest = ft_strdup(aux);
+	free(aux);
+	*/
 	
-	printf(" -> %i\n",first_n);
-	return (rest);
-}
-
-static char	*ft_more_reading(char *rest, int fd)
-{
-	char	*buffer;
-	char	*aux;
-
-	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (0);
-	ft_bzero(buffer, BUFFER_SIZE + 1);
-	if (read(fd, buffer, BUFFER_SIZE))
-	{
-		printf("Direccion rest->%p\n",rest);
-		printf("Direccion buffer->%p\n",buffer);
-		free(rest);
-		aux = ft_strjoin(rest, buffer);
-		rest = ft_substr(aux, 0, ft_strlen(aux));
-//		free(aux);
-//		free(rest);
-		printf("Soy otros rest->%s\n",rest);
-		free(buffer);
-		return (rest);
-	}
-	free(buffer);
-	return (rest);
-}
-
-
-	printf("Soy el primer salto->%i\n", first_n);
-	printf("----------------------------------\n");
-	printf("Soy la primera lectura-> %s\n",rest);
-	printf("----------------------------------\n");
-
-	static char	*ft_first_read(char *rest, int fd)
-{
-	char	*buffer;
-
-	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (0);
-	ft_bzero(buffer, BUFFER_SIZE + 1);
-	if (read(fd, buffer, BUFFER_SIZE))
-	{
-		//rest = ft_substr(buffer, 0, BUFFER_SIZE + 1);
-		rest = ft_strjoin(rest, buffer);
-		free(buffer);
-		free(rest);
-		printf("Soy el primer rest->%s\n",rest);
-		printf("Direccion rest->%p\n",rest);
-		printf("Direccion buffer->%p\n",buffer);
-		return (rest);
-	}
-	free (buffer);
-	return (0);
-}
+	free (*rest);
+	*rest = aux;
+	//printf("rest:\n%s\n",*rest);
+	//free (aux);
+/*	
+	printf("Dir **rest->%p\n",*rest);
+	printf("Dir line->%p\n",line);
+	printf("Dir aux->%p\n",aux);
 */
+	//free (line);
+	return(line);
+}
 
 void leakss()
 {
 	system ("leaks a.out");
 }
 
+
 int	main()
+
 {
 	int fd;
+	int i;
 
 	atexit(leakss);
 
-	fd = open("el_quijote.txt", O_RDONLY);
-//	while (get_next_line(fd))
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
-		//printf("LINEA--->>>%s",get_next_line(fd));
-//		printf("%s",get_next_line(fd));
-//		printf("%s",get_next_line(fd));
-
+	fd = open("41_no_nl.txt", O_RDONLY);
+	i = 1;
+	if (LINEAS == 0)
+		while (get_next_line(fd));
+	else
+		while (i <= LINEAS)
+		{
+			printf("Linea %i->%s",i,get_next_line(fd));
+			i++;
+		}
 	return 0;
 }
+
+
+/*	**********PRINTS VARIOS:***************
+	printf("%s\n",);
+	printf("Buffer:\n%s\n",buffer);
+	printf("aux:\n%s\n",aux);
+	printf("rest:\n%s\n",rest);
+	printf("line:\n%s\n",line);
+	printf("%p\n",);
+*/
+
