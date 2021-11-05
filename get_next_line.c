@@ -12,6 +12,9 @@
 
 #include "get_next_line.h"
 
+#define BUFFER_SIZE 1
+#define LINEAS 1
+
 char	*ft_split_line(char **rest,int first_n);
 char	*ft_readtext(int fd, int *first_n, char **rest);
 
@@ -102,16 +105,16 @@ int	main()
 	int fd;
 	int i;
 
-	atexit(leakss);
+	//atexit(leakss);
 
-	fd = open("41_no_nl.txt", O_RDONLY);
+	fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
 	else
 		while (i <= LINEAS)
 		{
-			printf("Linea %i->%s",i,get_next_line(fd));
+			//printf("Linea %i->%s",i,get_next_line(fd));
 			i++;
 		}
 	return 0;
