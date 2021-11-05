@@ -107,7 +107,8 @@ int	main()
 
 	//atexit(leakss);
 
-	fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
+	//fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
+	fd = open("41_no_nl.txt", O_RDONLY);
 	i = 1;
 	if (LINEAS == 0)
 		while (get_next_line(fd));
@@ -115,6 +116,7 @@ int	main()
 		while (i <= LINEAS)
 		{
 			//printf("Linea %i->%s",i,get_next_line(fd));
+get_next_line(fd);
 			i++;
 		}
 	return 0;
