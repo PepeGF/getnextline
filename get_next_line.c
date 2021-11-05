@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   separandofunciones.c                               :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/04 13:40:23 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:35:15 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 			free (buffer);
 			return (0);
 		}
-	//printf("Buffer:\n%s\n",buffer);
 	aux = ft_strjoin(*rest, buffer);
-	//printf("rest:%s\naux:%s\n",*rest, aux);
-	//printf("aux:\n%s\n",aux);
 	free(buffer);
 	if (*rest && ft_strlen(*rest) > 0)
 		free(*rest);
@@ -61,9 +58,6 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 	free(aux);
 	*first_n = ft_strchr(*rest, 10);
 	}
-	//printf("Dir **rest->%p\n",*rest);
-	//printf("Dir buffer->%p\n",buffer);
-	//printf("Dir aux->%p\n",aux);
 	return(*rest);
 }
 
@@ -79,17 +73,8 @@ char	*ft_split_line(char **rest,int first_n)
 	*rest = ft_strdup(aux);
 	free(aux);
 	*/
-	
 	free (*rest);
 	*rest = aux;
-	//printf("rest:\n%s\n",*rest);
-	//free (aux);
-/*	
-	printf("Dir **rest->%p\n",*rest);
-	printf("Dir line->%p\n",line);
-	printf("Dir aux->%p\n",aux);
-*/
-	//free (line);
 	return(line);
 }
 
