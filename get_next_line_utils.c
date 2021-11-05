@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/05 17:51:06 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/05 19:30:06 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ size_t	ft_strlen(const char *s)
 	if (!s)			//añadido
 		return (0);	//añadido
 	i = 0;
+
 	while (s[i])
 		i++;
 	return (i);
@@ -116,6 +117,7 @@ char	*ft_strdup(const char *s1)
 	ptr = (char *)malloc(sizeof(char) * (lens1 + 1));
 	if (ptr == NULL)
 		return (0);
+	ptr[lens1] = 0;
 	i = 0;
 	while (s1[i])
 	{
