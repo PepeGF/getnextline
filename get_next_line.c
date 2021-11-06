@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/06 11:48:40 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:28:46 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*ft_split_line(char **rest,int first_n)
 	*/
 	free (*rest);
 	*rest = aux;
+	free (aux);		//soluciona un leak
 	return(line);
 }
 
