@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/05 17:35:15 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/06 10:31:05 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_split_line(char **rest,int first_n)
 	*rest = aux;
 	return(line);
 }
-
+/*
 void leakss()
 {
 	system ("leaks a.out");
@@ -106,7 +106,7 @@ get_next_line(fd);
 		}
 	return 0;
 }
-
+*/
 
 /*	**********PRINTS VARIOS:***************
 	printf("%s\n",);
