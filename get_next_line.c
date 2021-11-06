@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/06 13:28:46 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/06 16:19:01 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main()
 	//atexit(leakss);
 
 	//fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
-	fd = open("nl.txt", O_RDONLY);
+	fd = open("41_no_nl", O_RDONLY);
 	if (LINEAS == 0)
 		while (get_next_line(fd));
 	else
