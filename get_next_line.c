@@ -6,14 +6,14 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/06 10:31:05 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:11:16 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 1
-#define LINEAS 1
+//#define BUFFER_SIZE 1
+//#define LINEAS 1
 
 char	*ft_split_line(char **rest,int first_n);
 char	*ft_readtext(int fd, int *first_n, char **rest);
@@ -77,7 +77,7 @@ char	*ft_split_line(char **rest,int first_n)
 	*rest = aux;
 	return(line);
 }
-/*
+
 void leakss()
 {
 	system ("leaks a.out");
@@ -90,7 +90,7 @@ int	main()
 	int fd;
 	int i;
 
-	//atexit(leakss);
+	atexit(leakss);
 
 	//fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
 	fd = open("41_no_nl.txt", O_RDONLY);
@@ -106,7 +106,7 @@ get_next_line(fd);
 		}
 	return 0;
 }
-*/
+
 
 /*	**********PRINTS VARIOS:***************
 	printf("%s\n",);
