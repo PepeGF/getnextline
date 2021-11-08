@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/06 16:19:01 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:13:34 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 {
 	char	*buffer;
 	char	*aux;
+	int		lenread;
 
 	while (*first_n == -1)
 	{
@@ -45,7 +46,8 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 		if (!buffer)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
-		if (!read (fd, buffer, BUFFER_SIZE))
+		lenread = read (fd, buffer, BUFFER_SIZE);
+		if (lenread < BUFFER_SIZE)
 		{
 			free (buffer);
 			return (0);
