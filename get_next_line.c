@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/19 11:17:35 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:01:51 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,19 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
 		lenread = read (fd, buffer, BUFFER_SIZE);
+		if (lenread == -1)
+		{
+			free (buffer);
+			return (0);
+		}
+		if (lenread == 0 && !buffer)
+		{
+			free (buffer);
+			return (0);
+		}
 		if (lenread < BUFFER_SIZE)
 		{
-			buffer[ft_strlen(buffer)] = '\n';
+			*first_n = ft_strlen(buffer); //-1??
 		}
 	aux = ft_strjoin(*rest, buffer);
 	free(buffer);
@@ -90,7 +100,7 @@ void leakss()
 	system ("leaks a.out");
 }
 
-/*
+
 int	main()
 
 {
@@ -100,7 +110,7 @@ int	main()
 	//atexit(leakss);
 
 	//fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
-	fd = open("41_no_nl", O_RDONLY);
+	fd = open("empty", O_RDONLY);
 	if (LINEAS == 0)
 		while (get_next_line(fd));
 	else
@@ -115,7 +125,7 @@ get_next_line(fd);
 	}
 	return 0;
 }
-*/
+
 
 /*	**********PRINTS VARIOS:***************
 	printf("%s\n",);
