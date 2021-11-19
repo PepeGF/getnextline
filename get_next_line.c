@@ -6,14 +6,14 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/08 15:13:34 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:17:35 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 1
-#define LINEAS 0
+//#define BUFFER_SIZE 1
+//#define LINEAS 0
 
 char	*ft_split_line(char **rest,int first_n);
 char	*ft_readtext(int fd, int *first_n, char **rest);
@@ -27,7 +27,11 @@ char	*get_next_line(int fd)
 		return (0);
 	first_n = ft_strchr(rest, 10);
 	if (!ft_readtext(fd, &first_n, &rest))
+	{
+		if (rest)
+			free(rest);
 		return (0);
+	}
 	else
 	{
 		return(ft_split_line(&rest, first_n));
@@ -49,8 +53,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 		lenread = read (fd, buffer, BUFFER_SIZE);
 		if (lenread < BUFFER_SIZE)
 		{
-			free (buffer);
-			return (0);
+			buffer[ft_strlen(buffer)] = '\n';
 		}
 	aux = ft_strjoin(*rest, buffer);
 	free(buffer);
@@ -58,7 +61,8 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 		free(*rest);
 	*rest = ft_strdup(aux);
 	free(aux);
-	*first_n = ft_strchr(*rest, 10);
+	if (lenread == BUFFER_SIZE)
+		*first_n = ft_strchr(*rest, 10);
 	}
 	return(*rest);
 }
@@ -86,7 +90,7 @@ void leakss()
 	system ("leaks a.out");
 }
 
-
+/*
 int	main()
 
 {
@@ -111,7 +115,7 @@ get_next_line(fd);
 	}
 	return 0;
 }
-
+*/
 
 /*	**********PRINTS VARIOS:***************
 	printf("%s\n",);
