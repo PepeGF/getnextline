@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/19 12:12:18 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:01:02 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void leakss()
 	system ("leaks a.out");
 }
 
-/*
+
 int	main()
 
 {
@@ -110,7 +110,7 @@ int	main()
 	//atexit(leakss);
 
 	//fd = open("/home/josgarci/getnextline/41_no_nl.txt", O_RDONLY);
-	fd = open("empty", O_RDONLY);
+	fd = open("5_no_nl", O_RDONLY);
 	if (LINEAS == 0)
 		while (get_next_line(fd));
 	else
@@ -125,7 +125,7 @@ get_next_line(fd);
 	}
 	return 0;
 }
-*/
+
 
 /*	**********PRINTS VARIOS:***************
 	printf("%s\n",);
