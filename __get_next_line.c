@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:46:54 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/19 18:49:17 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/19 20:22:06 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char    *ft_split_line(char **rest,int first_n)
 	*rest = aux;
 	return (line);
 }
-/*
+
 int main()
 {
 	int		fd;
@@ -78,4 +78,4 @@ int main()
 	free (line);
 	return (0);
 }
-*/
+
