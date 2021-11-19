@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/19 14:01:02 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/19 15:10:06 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 	free(aux);
 	if (lenread == BUFFER_SIZE)
 		*first_n = ft_strchr(*rest, 10);
+	if (lenread == 0)
+		break;
 	}
 	return(*rest);
 }
@@ -118,8 +120,8 @@ int	main()
 		i = 1;
 		while (i <= LINEAS)
 		{
-			//printf("Linea %i->%s",i,get_next_line(fd));
-get_next_line(fd);
+			printf("Linea %i->%s",i,get_next_line(fd));
+//get_next_line(fd);
 			i++;
 		}
 	}
