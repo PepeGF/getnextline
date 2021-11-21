@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/06 14:44:40 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/21 11:48:39 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
 	str = (char *)malloc(sizeof(char) * (len + 1));
-	ft_bzero (str, len + 1);			//para q incluso len = 0 tenga nulo
 	if (str == NULL)
 		return (0);
+	ft_bzero (str, len + 1);			//para q incluso len = 0 tenga nulo
 	if (len == 0)
 		return (str);
 	while (i < len && i + start < ft_strlen(s))
@@ -114,6 +114,8 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	lens1 = ft_strlen(s1);
+	if (s1 == 0)
+		return (0);
 	ptr = (char *)malloc(sizeof(char) * (lens1 + 1));
 	if (ptr == NULL)
 		return (0);

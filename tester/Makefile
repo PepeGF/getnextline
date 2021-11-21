@@ -34,7 +34,7 @@ CPPFLAGS				= -g3 -ldl -std=c++11 -I utils/ -I.. -Wno-everything
 
 UNAME = $(shell uname -s)
 ifeq ($(UNAME), Linux)
-    VALGRIND = valgrind -q --leak-check=full
+    VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 endif
 
 $(1MANDATORY): 1%:

@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/19 20:38:19 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/21 18:55:10 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 		}
 	aux = ft_strjoin(*rest, buffer);
 	free(buffer);
-	if (lenread < BUFFER_SIZE)// y además no hay salto
+	if (lenread < BUFFER_SIZE /*&& *first_n == -1*/)// y además no hay salto
 			*first_n = ft_strlen(aux);
-	if (*rest && ft_strlen(*rest) > 0)
+	if (*rest /*&& ft_strlen(*rest) > 0*/)
 		free(*rest);
 	*rest = ft_strdup(aux);
 	free(aux);
@@ -81,21 +81,18 @@ char	*ft_split_line(char **rest,int first_n)
 	*rest = aux;
 	return(line);
 }
-
+/*
 int main()
 {
     int     fd;
     char    *line;
     fd = open(FILEPATH, O_RDONLY);
-    line = ft_strdup(get_next_line(fd));
-    printf("%s",line);
+    line = get_next_line(fd);
     free (line);
-    line = ft_strdup(get_next_line(fd));
-    printf("%s",line);
+    line = get_next_line(fd);
     free (line);
-    line = ft_strdup(get_next_line(fd));
-    printf("%s",line);
+    line = get_next_line(fd);
     free (line);
     return (0);
 }
-
+*/
