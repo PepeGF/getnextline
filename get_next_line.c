@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/21 18:55:10 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/22 12:03:18 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //#define BUFFER_SIZE 1
 //#define LINEAS 0
 
-char	*ft_split_line(char **rest,int first_n);
+char	*ft_split_line(char **rest, int first_n);
 char	*ft_readtext(int fd, int *first_n, char **rest);
 
 char	*get_next_line(int fd)
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	static char	*rest;
 	int			first_n;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd,0,0) == -1)
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) == -1)
 		return (0);
 	first_n = ft_strchr(rest, 10);
 	if (!ft_readtext(fd, &first_n, &rest))
@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 		return (0);
 	}
 	else
-		return(ft_split_line(&rest, first_n));
+		return (ft_split_line(&rest, first_n));
 }
 
 char	*ft_readtext(int fd, int *first_n, char **rest)
@@ -54,23 +54,20 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 			free (buffer);
 			return (0);
 		}
-	aux = ft_strjoin(*rest, buffer);
-	free(buffer);
-	if (lenread < BUFFER_SIZE /*&& *first_n == -1*/)// y además no hay salto
-			*first_n = ft_strlen(aux);
-	if (*rest /*&& ft_strlen(*rest) > 0*/)
-		free(*rest);
-	*rest = ft_strdup(aux);
-	free(aux);
-	if (lenread == BUFFER_SIZE)
+		aux = ft_strjoin(*rest, buffer);
+		free(buffer);
+		if (*rest)
+			free(*rest);
+		*rest = ft_strdup(aux);
+		free(aux);
 		*first_n = ft_strchr(*rest, 10);
-	if (lenread == 0)
-		*first_n = ft_strlen(*rest);
+		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
+			*first_n = ft_strlen(*rest);
 	}
-	return(*rest);
+	return (*rest);
 }
 
-char	*ft_split_line(char **rest,int first_n)
+char	*ft_split_line(char **rest, int first_n)
 {
 	char	*line;
 	char	*aux;
@@ -79,7 +76,7 @@ char	*ft_split_line(char **rest,int first_n)
 	aux = ft_substr(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
 	free (*rest);
 	*rest = aux;
-	return(line);
+	return (line);
 }
 /*
 int main()
@@ -88,10 +85,13 @@ int main()
     char    *line;
     fd = open(FILEPATH, O_RDONLY);
     line = get_next_line(fd);
+	printf("%s",line);
     free (line);
     line = get_next_line(fd);
+	printf("%s",line);
     free (line);
     line = get_next_line(fd);
+	printf("%s",line);
     free (line);
     return (0);
 }
