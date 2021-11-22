@@ -6,27 +6,27 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/22 12:03:18 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/22 23:41:40 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-//#define BUFFER_SIZE 1
-//#define LINEAS 0
-
 char	*ft_split_line(char **rest, int first_n);
-char	*ft_readtext(int fd, int *first_n, char **rest);
+char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest);
 
 char	*get_next_line(int fd)
 {
 	static char	*rest;
 	int			first_n;
+	size_t		lenrest;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) == -1)
 		return (0);
+	lenrest = ft_strlen(rest);
+	lenrest *= 1;
 	first_n = ft_strchr(rest, 10);
-	if (!ft_readtext(fd, &first_n, &rest))
+	if (!ft_readtext(fd, &first_n, &rest, &lenrest))
 	{
 		if (rest)
 			free(rest);
@@ -36,7 +36,7 @@ char	*get_next_line(int fd)
 		return (ft_split_line(&rest, first_n));
 }
 
-char	*ft_readtext(int fd, int *first_n, char **rest)
+char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 {
 	char	*buffer;
 	char	*aux;
@@ -49,18 +49,22 @@ char	*ft_readtext(int fd, int *first_n, char **rest)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
 		lenread = read (fd, buffer, BUFFER_SIZE);
-		if (lenread == -1 || (lenread == 0 && ft_strlen(*rest) == 0))
+		if (lenread == -1 || (lenread == 0 && *lenrest == 0))
 		{
 			free (buffer);
 			return (0);
 		}
+		*lenrest += lenread;
+		//printf("%lu\n",*lenrest);
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
 		if (*rest)
 			free(*rest);
 		*rest = ft_strdup(aux);
 		free(aux);
+		//cambiar este first_n
 		*first_n = ft_strchr(*rest, 10);
+		//seguir modificando *first_n desde aquí
 		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
 			*first_n = ft_strlen(*rest);
 	}
@@ -78,21 +82,23 @@ char	*ft_split_line(char **rest, int first_n)
 	*rest = aux;
 	return (line);
 }
-/*
-int main()
+
+int	main(void)
 {
-    int     fd;
-    char    *line;
-    fd = open(FILEPATH, O_RDONLY);
-    line = get_next_line(fd);
-	printf("%s",line);
-    free (line);
-    line = get_next_line(fd);
-	printf("%s",line);
-    free (line);
-    line = get_next_line(fd);
-	printf("%s",line);
-    free (line);
-    return (0);
+	int	fd;
+	char	*line;
+	fd = open(FILEPATH, O_RDONLY);
+	line = get_next_line(fd);
+	line[0] = '0';
+	//printf("%s",line);
+	free (line);
+	line = get_next_line(fd);
+	//printf("%s",line);
+	free (line);
+	//line = get_next_line(fd);
+	//printf("%s",line);
+	//free (line);
+	close (fd);
+	return (0);
 }
-*/
+

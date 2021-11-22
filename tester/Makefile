@@ -76,7 +76,8 @@ bonus_start: update
 	@tput setaf 5 && /bin/echo [Bonus]
 
 update:
-	@git pull
+	@echo "Hola!"
+	#@git pull
 
 dockerm dockerb dockera: docker%:
 	@docker rm -f mc > /dev/null 2>&1 || true
