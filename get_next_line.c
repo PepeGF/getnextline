@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/22 23:41:40 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/23 22:21:34 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		if (!buffer)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
+		//buffer[BUFFER_SIZE] = 0;
 		lenread = read (fd, buffer, BUFFER_SIZE);
 		if (lenread == -1 || (lenread == 0 && *lenrest == 0))
 		{
@@ -55,6 +56,9 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 			return (0);
 		}
 		*lenrest += lenread;
+	//	*first_n = ft_strchr(buffer, 10);
+	//	if (*first_n != -1)
+	//		*first_n = *first_n + *lenrest - lenread - 0;
 		//printf("%lu\n",*lenrest);
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
