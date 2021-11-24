@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/24 23:25:44 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:57:17 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		if (!buffer)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
-		
 		lenread = read (fd, buffer, BUFFER_SIZE);
 		if (lenread == -1 || (lenread == 0 && *lenrest == 0))
 		{
@@ -58,9 +57,8 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		}
 		*lenrest += lenread;
 		*first_n = ft_strchr(buffer, 10);
-		
-		ft_split_and_join(buffer, first_n, rest);
-		
+		if (*first_n != -1)
+			*first_n = *first_n + *lenrest - lenread - 0;
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
 		if (*rest)
@@ -69,23 +67,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
 			*first_n = *lenrest;
 	}
-	return (line);
-}
-
-char	*ft_plit_and_join(char *buffer, int *first_n, char **rest)
-{
-	//aqui voy a separar la primera parte del buffer y unirla al resto
-	char *aux;
-	char *line;
-
-	aux = ft_substr(buffer, 0, *first_n + 1);
-	line = ft_strjoin(*rest, aux);
-
-	free(aux);
-	free(*rest);
-	*rest = aux2;
-	//y generar un nuevo resto q sera todo lo de después del resto
-	return (line); //return (*rest);?
+	return (*rest);
 }
 
 char	*ft_split_line(char **rest, int first_n)
