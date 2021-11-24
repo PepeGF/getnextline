@@ -6,41 +6,27 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 11:53:01 by potero-d          #+#    #+#             */
-/*   Updated: 2021/11/24 16:18:28 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:56:10 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include"get_next_line.h"
-#include<stdio.h>
 #include <fcntl.h>
 /*
-int	main(void)
+int				main()
 {
-	int		fd;
-//	char	*print;
-	
-	fd = open("123.txt", O_RDONLY);
-	if (fd == -1)
-		return (write(1, "NULL\n", 5));
+	int			fd;
+	char		*str;
+	int			i;
 
-	get_next_line(0);	
-	get_next_line(0);	
-	get_next_line(0);	
-	get_next_line(0);	
-//	system("leaks a.out");
-//	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	close(fd);
+	i = 0;
+	fd = open("lotr.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
+		free(str);
+	return (0);
 }
 */
-int				main()
+
+int	main()
 {
 	int			fd;
 	char		*str;
@@ -52,11 +38,11 @@ int				main()
 //	printf("%s", str); 
 	while ((str = get_next_line(fd)))
 	{
-       // printf("line %i=>%s", i + 1, str);
+       //printf("line %i=>%s", i + 1, str);
 		free(str);
 		//i++;
 	}
-//	system("leaks a.out");
+	system("leaks a.out");
 	return (0);
 }
 /*

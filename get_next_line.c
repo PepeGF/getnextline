@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/24 16:15:52 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:57:17 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	*get_next_line(int fd)
 	int			first_n;
 	size_t		lenrest;
 
-	printf("%d",BUFFER_SIZE);
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) == -1)
 		return (0);
 	lenrest = ft_strlen(rest);
-	lenrest *= 1;
 	first_n = ft_strchr(rest, 10);
+	if (first_n != -1)
+		return(ft_split_line(&rest, first_n));
 	if (!ft_readtext(fd, &first_n, &rest, &lenrest))
 	{
 		if (rest)
@@ -49,7 +49,6 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		if (!buffer)
 			return (0);
 		ft_bzero (buffer, BUFFER_SIZE + 1);
-		//buffer[BUFFER_SIZE] = 0;
 		lenread = read (fd, buffer, BUFFER_SIZE);
 		if (lenread == -1 || (lenread == 0 && *lenrest == 0))
 		{
@@ -59,20 +58,14 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		*lenrest += lenread;
 		*first_n = ft_strchr(buffer, 10);
 		if (*first_n != -1)
-		*first_n = *first_n + *lenrest - lenread - 0;
-		//printf("%lu\n",*lenrest);
+			*first_n = *first_n + *lenrest - lenread - 0;
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
 		if (*rest)
 			free(*rest);
-		*rest = ft_strdup(aux);
-		free(aux);
-		//cambiar este first_n
-		//*first_n = ft_strchr(*rest, 10);
-		//seguir modificando *first_n desde aquí
+		*rest = aux;
 		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
 			*first_n = *lenrest;
-			//*first_n = ft_strlen(*rest);
 	}
 	return (*rest);
 }
@@ -88,23 +81,3 @@ char	*ft_split_line(char **rest, int first_n)
 	*rest = aux;
 	return (line);
 }
-/*
-int	main(void)
-{
-	int	fd;
-	char	*line;
-	fd = open(FILEPATH, O_RDONLY);
-	line = get_next_line(fd);
-	line[0] = '0';
-	//printf("%s",line);
-	free (line);
-	line = get_next_line(fd);
-	//printf("%s",line);
-	free (line);
-	//line = get_next_line(fd);
-	//printf("%s",line);
-	//free (line);
-	close (fd);
-	return (0);
-}
-*/
