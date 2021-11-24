@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/23 22:21:34 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:15:52 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*get_next_line(int fd)
 	int			first_n;
 	size_t		lenrest;
 
+	printf("%d",BUFFER_SIZE);
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) == -1)
 		return (0);
 	lenrest = ft_strlen(rest);
@@ -56,9 +57,9 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 			return (0);
 		}
 		*lenrest += lenread;
-	//	*first_n = ft_strchr(buffer, 10);
-	//	if (*first_n != -1)
-	//		*first_n = *first_n + *lenrest - lenread - 0;
+		*first_n = ft_strchr(buffer, 10);
+		if (*first_n != -1)
+		*first_n = *first_n + *lenrest - lenread - 0;
 		//printf("%lu\n",*lenrest);
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
@@ -67,10 +68,11 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		*rest = ft_strdup(aux);
 		free(aux);
 		//cambiar este first_n
-		*first_n = ft_strchr(*rest, 10);
+		//*first_n = ft_strchr(*rest, 10);
 		//seguir modificando *first_n desde aquí
 		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
-			*first_n = ft_strlen(*rest);
+			*first_n = *lenrest;
+			//*first_n = ft_strlen(*rest);
 	}
 	return (*rest);
 }
@@ -86,7 +88,7 @@ char	*ft_split_line(char **rest, int first_n)
 	*rest = aux;
 	return (line);
 }
-
+/*
 int	main(void)
 {
 	int	fd;
@@ -105,4 +107,4 @@ int	main(void)
 	close (fd);
 	return (0);
 }
-
+*/

@@ -6,23 +6,21 @@
 /*   By: josgarci <josgarci@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:21:43 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/04 10:28:13 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:10:28 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define  GET_NEXT_LINE_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define  BUFFER_SIZE 42
+# endif
 
-typedef struct s_list
-{
-	char			*line;
-	struct s_list 	*next;
-} t_list;
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
 void	ft_bzero(void *str, size_t n);
