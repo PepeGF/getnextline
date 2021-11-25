@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 11:53:01 by potero-d          #+#    #+#             */
-/*   Updated: 2021/11/24 16:56:10 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/25 13:50:14 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include"get_next_line.h"
@@ -25,7 +25,7 @@ int				main()
 	return (0);
 }
 */
-
+/*
 int	main()
 {
 	int			fd;
@@ -42,10 +42,11 @@ int	main()
 		free(str);
 		//i++;
 	}
-	system("leaks a.out");
+	//system("leaks a.out");
 	return (0);
 }
-/*
+*/
+
 int	main(void)
 {
 	int	fd;
@@ -64,4 +65,4 @@ int	main(void)
 	close (fd);
 	return (0);
 }
-*/
+

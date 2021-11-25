@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2021/11/24 23:25:44 by josgarci         ###   ########.fr       */
+/*   Updated: 2021/11/25 13:52:29 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*ft_split_line(char **rest, int first_n);
 char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest);
+char	*ft_fill_buffer(char *buffer, int *lenread, int fd);
 
 char	*get_next_line(int fd)
 {
@@ -26,7 +27,7 @@ char	*get_next_line(int fd)
 	lenrest = ft_strlen(rest);
 	first_n = ft_strchr(rest, 10);
 	if (first_n != -1)
-		return(ft_split_line(&rest, first_n));
+		return (ft_split_line(&rest, first_n));
 	if (!ft_readtext(fd, &first_n, &rest, &lenrest))
 	{
 		if (rest)
@@ -45,12 +46,7 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 
 	while (*first_n == -1)
 	{
-		buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buffer)
-			return (0);
-		ft_bzero (buffer, BUFFER_SIZE + 1);
-		
-		lenread = read (fd, buffer, BUFFER_SIZE);
+		buffer = ft_fill_buffer(buffer, &lenread, fd);
 		if (lenread == -1 || (lenread == 0 && *lenrest == 0))
 		{
 			free (buffer);
@@ -58,9 +54,8 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		}
 		*lenrest += lenread;
 		*first_n = ft_strchr(buffer, 10);
-		
-		ft_split_and_join(buffer, first_n, rest);
-		
+		if (*first_n != -1)
+			*first_n = *first_n + *lenrest - lenread - 0;
 		aux = ft_strjoin(*rest, buffer);
 		free(buffer);
 		if (*rest)
@@ -69,23 +64,17 @@ char	*ft_readtext(int fd, int *first_n, char **rest, size_t *lenrest)
 		if ((*first_n == -1 && lenread < BUFFER_SIZE) || lenread == 0)
 			*first_n = *lenrest;
 	}
-	return (line);
+	return (*rest);
 }
 
-char	*ft_plit_and_join(char *buffer, int *first_n, char **rest)
+char	*ft_fill_buffer(char *buffer, int *lenread, int fd)
 {
-	//aqui voy a separar la primera parte del buffer y unirla al resto
-	char *aux;
-	char *line;
-
-	aux = ft_substr(buffer, 0, *first_n + 1);
-	line = ft_strjoin(*rest, aux);
-
-	free(aux);
-	free(*rest);
-	*rest = aux2;
-	//y generar un nuevo resto q sera todo lo de después del resto
-	return (line); //return (*rest);?
+	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (0);
+	ft_bzero (buffer, BUFFER_SIZE + 1);
+	*lenread = read (fd, buffer, BUFFER_SIZE);
+	return (buffer);
 }
 
 char	*ft_split_line(char **rest, int first_n)
