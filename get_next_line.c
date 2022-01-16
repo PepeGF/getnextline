@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:06:13 by josgarci          #+#    #+#             */
-/*   Updated: 2022/01/16 12:26:23 by josgarci         ###   ########.fr       */
+/*   Updated: 2022/01/16 13:21:24 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) == -1)
 		return (0);
-	lenrest = ft_strlen(rest);
+	lenrest = ft_strlen_gnl(rest);
 	first_n = ft_strchr_gnl(rest, 10);
 	if (first_n != -1)
 		return (ft_split_line(&rest, first_n));
@@ -83,7 +83,7 @@ char	*ft_split_line(char **rest, int first_n)
 	char	*aux;
 
 	line = ft_substr_gnl(*rest, 0, first_n + 1);
-	aux = ft_substr_gnl(*rest, first_n + 1, ft_strlen(*rest) - first_n - 1);
+	aux = ft_substr_gnl(*rest, first_n + 1, ft_strlen_gnl(*rest) - first_n - 1);
 	free (*rest);
 	*rest = aux;
 	return (line);

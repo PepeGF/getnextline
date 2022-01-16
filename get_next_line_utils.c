@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2022/01/16 12:26:57 by josgarci         ###   ########.fr       */
+/*   Updated: 2022/01/16 13:21:23 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_substr_gnl(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (0);
-	len_s = ft_strlen(s);
+	len_s = ft_strlen_gnl(s);
 	if (start >= len_s)
 		len = 0;
 	if (len > len_s)
@@ -66,7 +66,7 @@ char	*ft_substr_gnl(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_gnl(const char *s)
 {
 	int	i;
 
@@ -85,8 +85,8 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 	size_t	s1len;
 	size_t	s2len;
 
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
+	s1len = ft_strlen_gnl(s1);
+	s2len = ft_strlen_gnl(s2);
 	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!str)
 		return (0);
