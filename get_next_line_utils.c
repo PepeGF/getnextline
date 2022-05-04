@@ -6,7 +6,7 @@
 /*   By: josgarci <josgarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:59:42 by josgarci          #+#    #+#             */
-/*   Updated: 2022/01/16 13:21:23 by josgarci         ###   ########.fr       */
+/*   Updated: 2022/05/04 20:19:26 by josgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 	size_t	i;
 	size_t	s1len;
 	size_t	s2len;
-
+//la funcion origina está protegida, aqui la protecccion está en strlen, necesitamos que esta funcion
+//si o si genere un puntero a un string aunque el string solo contenga un nulo
 	s1len = ft_strlen_gnl(s1);
 	s2len = ft_strlen_gnl(s2);
 	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
